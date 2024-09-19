@@ -31,7 +31,9 @@ Key components of the data structure:
 
  ![DFDim](https://github.com/user-attachments/assets/827a8b13-e184-4ff9-babc-c54d329c9b21)
  
-Data Model Slipstream 
+## Data Model Slipstream 
+
+
 ![Slipstream datamodel](https://github.com/user-attachments/assets/5e0c8ed7-74a0-4cd5-b186-68728fceb7b4)
 
 
