@@ -1,0 +1,72 @@
+.LOGON dbc/Sysdba,learning;
+
+
+CREATE VOLATILE TABLE fetch_start_time(start_time time)ON COMMIT PRESERVE ROWS;
+insert into fetch_start_time values(CURRENT_TIME);
+
+insert into stg_slipstream_telecom.stg_loyalty
+select subscriber_id(NUMBER(10)), 
+	user_id(VARCHAR(30)),
+	 CASE
+	   WHEN loyalty_badge='SLVR' THEN 'Silver'
+	   WHEN loyalty_badge='BRNZ' THEN 'Bronze'
+	   WHEN loyalty_badge='GOLD' THEN 'Gold'
+	   WHEN loyalty_badge='PLAT' THEN 'Platinum'
+	 END,
+	 CAST(loyalty_spent AS INT),
+	 CAST(loyalty_accrue AS INT),
+	 CAST(
+		CASE
+		WHEN  substr(Reg_date_time,3,1)      =  '/'   and  substr(Reg_date_time,5,1) = '/'  THEN SUBSTR (Reg_date_time,1,3) || '0' || substr(Reg_date_time,4,7)
+  		WHEN  substr(Reg_date_time,2,1)       = '/'   and  substr(Reg_date_time,4,1) = '/'  THEN '0' || SUBSTR (Reg_date_time,1,2) || '0' || substr(Reg_date_time,3,7)
+ 		WHEN  substr(Reg_date_time,2,1)       = '/'   and  substr(Reg_date_time,4,1) <>  '/'  THEN '0' || SUBSTR (Reg_date_time,1,9)
+  		WHEN  substr(Reg_date_time,2,1)       <>  '/'   and  substr(Reg_date_time,4,1) =   '/'  THEN   SUBSTR (Reg_date_time,1,3)  || '0' || substr(Reg_date_time,4,6)
+		ELSE  substr(Reg_date_time,1,10)  
+                end
+		 AS DATE FORMAT 'MM/DD/YYYY'),
+	 CAST(currentDate AS DATE FORMAT 'MM/DD/YYYY'),
+         'N'
+FROM lnd_slipstream_telecom.lnd_loyalty;
+
+
+INSERT INTO audit_table values('load_stg_loyalty.btq',
+				'stg_slipstream_telecom',
+				'stg_loyalty',
+				'INSERT INTO stg_slipstream_telecom.stg_loyalty',
+				(SELECT start_time from fetch_start_time),
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM stg_slipstream_telecom.stg_loyalty),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM stg_slipstream_telecom.stg_loyalty)=0 THEN 'FAIL'
+				     ELSE 'SUCCESS'
+				END);
+
+DROP TABLE fetch_start_time;
+CREATE VOLATILE TABLE fetch_start_time(start_time time)ON COMMIT PRESERVE ROWS;
+insert into fetch_start_time values(CURRENT_TIME);
+
+
+UPDATE stg_slipstream_telecom.stg_loyalty SET Error_records = 'Y' 
+WHERE stg_loyalty.subscriber_id 
+NOT IN (SELECT subscriber_id FROM stg_slipstream_telecom.stg_cust_profile);
+
+INSERT INTO audit_table values('load_stg_loyalty.btq',
+				'stg_slipstream_telecom',
+				'stg_loyalty',
+				'UPDATE stg_slipstream_telecom.stg_loyalty SET Error_records = ''Y''',
+				(SELECT start_time from fetch_start_time),
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM stg_slipstream_telecom.stg_loyalty WHERE Error_records = 'Y'),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM stg_slipstream_telecom.stg_loyalty WHERE Error_records = 'Y')=0 THEN 'NO_ROWS_UPDATED'
+				     ELSE 'SUCCESS'
+				END);
+
+.LOGOFF;
+20:05 17-02-2021
+
+19:50 18-02-2021
+
+22:03 18-02-2021

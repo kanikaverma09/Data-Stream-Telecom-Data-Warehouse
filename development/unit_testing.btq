@@ -1,0 +1,59 @@
+.LOGON dbc/sysdba,learning;
+
+select 'row count of lnd_cust_stats table :' || count(*) as row_count 
+from lnd_Slipstream_Telecom.lnd_cust_stats;
+
+select 'row count of lnd_cust_profile table :' || count(*) as row_count  
+from lnd_Slipstream_Telecom.lnd_cust_profile;
+
+select 'row count of lnd_plan_master table :' || count(*) as row_count  
+from lnd_Slipstream_Telecom.lnd_plan_master;
+
+select 'row count of lnd_loyalty table :' || count(*) as row_count  
+from lnd_Slipstream_Telecom.lnd_loyalty;
+
+select 'row count of lnd_voice_plan_run table :' || count(*) as row_count  
+from lnd_Slipstream_Telecom.lnd_voice_plan_run;
+
+select 'row count of lnd_data_plan_run table :' || count(*) as row_count  
+from lnd_Slipstream_Telecom.lnd_data_plan_run;
+
+
+
+select 'row count of stg_cust_stats table :' || count(*) as row_count 
+from stg_Slipstream_Telecom.stg_cust_stats;
+
+select 'row count of stg_cust_profile table :' || count(*) as row_count  
+from stg_Slipstream_Telecom.stg_cust_profile;
+
+select 'row count of stg_plan_master table :' || count(*) as row_count  
+from stg_Slipstream_Telecom.stg_plan_master;
+
+select 'row count of stg_loyalty table :' || count(*) as row_count  
+from stg_Slipstream_Telecom.stg_loyalty;
+
+select 'row count of stg_voice_plan_run table :' || count(*) as row_count  
+from stg_Slipstream_Telecom.stg_voice_plan_run;
+
+select 'row count of stg_data_plan_run table :' || count(*) as row_count  
+from stg_Slipstream_Telecom.stg_data_plan_run;
+
+
+select 'row count of cr_cust_stats table :' || count(*) as row_count  
+from cr_Slipstream_Telecom.cr_cust_stats;
+
+select 'row count of cr_cust_profile table :' || count(*) as row_count  
+from cr_Slipstream_Telecom.cr_cust_profile;
+
+select 'row count of cr_plan_master table :' || count(*) as row_count  
+from cr_Slipstream_Telecom.cr_plan_master;
+
+select 'row count of cr_loyalty table :' || count(*) as row_count  
+from cr_Slipstream_Telecom.cr_loyalty;
+
+select 'row count of cr_transaction table :' || count(*) as row_count  
+from cr_Slipstream_Telecom.cr_transaction;
+
+
+.LOGOFF
+20:06 17-02-2021

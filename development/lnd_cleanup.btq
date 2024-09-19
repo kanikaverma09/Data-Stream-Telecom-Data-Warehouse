@@ -1,0 +1,34 @@
+.LOGON 192.168.112.128/Sysdba,learning;
+
+drop table lnd_slipstream_telecom.lnd_cust_stats;
+drop table lnd_slipstream_telecom.lnd_cust_stats_ET;
+drop table lnd_slipstream_telecom.lnd_cust_stats_UV;
+drop table lnd_slipstream_telecom.lnd_cust_stats_RL;
+
+drop table lnd_slipstream_telecom.lnd_cust_profile
+drop table lnd_slipstream_telecom.lnd_cust_profile_ET;
+drop table lnd_slipstream_telecom.lnd_cust_profile_UV;
+drop table lnd_slipstream_telecom.lnd_cust_profile_RL;
+
+drop table lnd_slipstream_telecom.lnd_plan_master;
+drop table lnd_slipstream_telecom.lnd_plan_master_ET;
+drop table lnd_slipstream_telecom.lnd_plan_master_UV;
+drop table lnd_slipstream_telecom.lnd_plan_master_RL;
+
+drop table lnd_slipstream_telecom.lnd_loyalty;
+drop table lnd_slipstream_telecom.lnd_loyalty_ET;
+drop table lnd_slipstream_telecom.lnd_loyalty_UV;
+drop table lnd_slipstream_telecom.lnd_loyalty_RL;
+
+drop table lnd_slipstream_telecom.lnd_data_plan_run;
+drop table lnd_slipstream_telecom.lnd_data_plan_run_ET;
+drop table lnd_slipstream_telecom.lnd_data_plan_run_UV;
+drop table lnd_slipstream_telecom.lnd_data_plan_run_RL;
+
+drop table lnd_slipstream_telecom.lnd_voice_plan_run;
+drop table lnd_slipstream_telecom.lnd_voice_plan_run_ET;
+drop table lnd_slipstream_telecom.lnd_voice_plan_run_UV;
+drop table lnd_slipstream_telecom.lnd_voice_plan_run_RL;
+
+
+.LOGOFF

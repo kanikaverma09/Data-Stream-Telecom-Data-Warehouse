@@ -1,0 +1,70 @@
+DEFINE JOB Load_lnd_cust_stats
+DESCRIPTION 'Load staging table'
+(
+DEFINE SCHEMA lnd_cust_stats_Schema
+FROM TABLE 'lnd_slipstream_telecom.lnd_cust_stats';
+
+DEFINE SCHEMA audit_schema
+FROM TABLE 'audit_table';
+
+DEFINE OPERATOR File_Reader
+TYPE DATACONNECTOR PRODUCER
+SCHEMA lnd_cust_stats_Schema
+ATTRIBUTES
+( VARCHAR FileName = 'Cust_stats.csv',
+VARCHAR Format = 'DELIMITED',
+VARCHAR OpenMode = 'Read',
+VARCHAR IndicatorMode = 'N',
+VARCHAR TextDelimiter = ',',
+VARCHAR AcceptExcessColumns = 'Y',
+VARCHAR AcceptMissingColumns = 'Y',
+INTEGER SkipRows = 1
+);
+
+DEFINE OPERATOR Load_lnd_cust_stats
+TYPE LOAD
+SCHEMA lnd_cust_stats_Schema
+ATTRIBUTES
+( VARCHAR UserName = 'sysdba',
+VARCHAR UserPassword = 'learning',
+VARCHAR Tdpid = '192.168.112.128',
+VARCHAR LogTable = 'lnd_cust_stats_RL',
+VARCHAR TargetTable = 'lnd_slipstream_telecom.lnd_cust_stats',
+INTEGER MaxSessions = 8,
+INTEGER TenacitySleep = 1,
+VARCHAR WildCardInsert = 'Y' /*Not default*/
+);
+
+
+DEFINE OPERATOR DDL_OPERATOR
+TYPE DDL
+
+   ATTRIBUTES
+   (
+      VARCHAR PrivateLogName = 'audit_log',
+      VARCHAR TdpId          = '192.168.112.128',
+      VARCHAR UserName       = 'sysdba',
+      VARCHAR UserPassword   = 'learning'
+   );
+
+STEP first_step(
+	APPLY ('INSERT INTO lnd_slipstream_telecom.lnd_cust_stats;')
+	TO OPERATOR (Load_lnd_cust_stats[1])
+	SELECT * FROM OPERATOR (File_Reader[1]);
+	);
+STEP second_step(
+	APPLY('INSERT INTO audit_table values(''load_lnd_cust_stats.btq'',
+				''lnd_slipstream_telecom'',
+				''lnd_cust_stats'',
+				''INSERT INTO lnd_slipstream_telecom.lnd_cust_stats'',
+				CURRENT_TIME,
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM lnd_slipstream_telecom.lnd_cust_stats),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM lnd_slipstream_telecom.lnd_cust_stats)=0 THEN ''FAIL''
+				     ELSE ''SUCCESS''
+				END);')
+	 TO OPERATOR(DDL_OPERATOR[1]);
+		);
+);

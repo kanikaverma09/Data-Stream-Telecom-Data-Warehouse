@@ -1,0 +1,54 @@
+.LOGON dbc/sysdba,learning;
+CREATE DATABASE "lnd_backup" FROM "Sysdba" AS
+	PERMANENT = 104857600,
+	SPOOL = 104857600,
+	TEMPORARY = 1000000000,
+	ACCOUNT = '$M00EDUC&D&H',
+	FALLBACK PROTECTION,
+	NO BEFORE JOURNAL,
+	NO AFTER JOURNAL;
+CREATE TABLE lnd_backup.lnd_cust_stats
+AS lnd_Slipstream_Telecom.lnd_cust_stats
+WITH DATA AND STATS;
+
+CREATE TABLE lnd_backup.lnd_cust_profile
+AS lnd_Slipstream_Telecom.lnd_cust_profile
+WITH DATA AND STATS;
+
+CREATE TABLE lnd_backup.lnd_plan_master
+AS lnd_Slipstream_Telecom.lnd_plan_master
+WITH DATA AND STATS;
+
+CREATE TABLE lnd_backup.lnd_loyalty
+AS lnd_Slipstream_Telecom.lnd_loyalty
+WITH DATA AND STATS;
+
+CREATE TABLE lnd_backup.lnd_voice_plan_run
+AS lnd_Slipstream_Telecom.lnd_voice_plan_run
+WITH NO DATA AND STATS;
+
+
+CREATE TABLE lnd_backup.lnd_data_plan_run
+AS lnd_Slipstream_Telecom.lnd_data_plan_run
+WITH NO DATA AND STATS;
+
+.LOGOFF;
+
+
+
+
+2:56 PM 2/16/2021
+
+3:53 PM 2/16/2021
+
+20:46 16-02-2021
+
+21:41 16-02-2021
+
+22:43 16-02-2021
+
+23:06 16-02-2021
+
+23:22 16-02-2021
+
+20:02 17-02-2021

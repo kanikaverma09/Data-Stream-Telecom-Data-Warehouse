@@ -1,0 +1,21 @@
+.LOGON dbc/sysdba,learning;
+
+INSERT INTO stg_backup.stg_voice_plan_run 
+SELECT * FROM stg_Slipstream_Telecom.stg_voice_plan_run;
+
+INSERT INTO stg_backup.stg_data_plan_run
+SELECT * FROM stg_Slipstream_Telecom.stg_data_plan_run;
+
+.LOGOFF;
+
+22:35 15-02-2021
+
+3:24 PM 2/16/2021
+
+21:34 16-02-2021
+
+21:43 16-02-2021
+
+23:01 16-02-2021
+
+20:06 17-02-2021

@@ -1,0 +1,26 @@
+.LOGON dbc/sysdba,learning;
+
+INSERT INTO lnd_backup.lnd_voice_plan_run 
+SELECT * FROM lnd_Slipstream_Telecom.lnd_voice_plan_run;
+
+INSERT INTO lnd_backup.lnd_data_plan_run
+SELECT * FROM lnd_Slipstream_Telecom.lnd_data_plan_run;
+
+.LOGOFF;
+
+
+8:40 PM 2/15/2021
+
+2:54 PM 2/16/2021
+
+20:46 16-02-2021
+
+21:41 16-02-2021
+
+22:43 16-02-2021
+
+23:22 16-02-2021
+
+15:58 17-02-2021
+
+20:03 17-02-2021

@@ -1,0 +1,6 @@
+
+.LOGON dbc/sysdba,learning;
+
+EXEC delete_voice_plan_run;
+
+.LOGOFF;

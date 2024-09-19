@@ -1,0 +1,48 @@
+.LOGON dbc/sysdba,learning;
+CREATE DATABASE "stg_backup" FROM "Sysdba" AS
+	PERMANENT = 104857600,
+	SPOOL = 104857600,
+	TEMPORARY = 1000000000,
+	ACCOUNT = '$M00EDUC&D&H',
+	FALLBACK PROTECTION,
+	NO BEFORE JOURNAL,
+	NO AFTER JOURNAL;
+
+CREATE TABLE stg_backup.stg_cust_stats
+AS stg_Slipstream_Telecom.stg_cust_stats
+WITH DATA AND STATS;
+
+CREATE TABLE stg_backup.stg_cust_profile
+AS stg_Slipstream_Telecom.stg_cust_profile
+WITH DATA AND STATS;
+
+CREATE TABLE stg_backup.stg_plan_master
+AS stg_Slipstream_Telecom.stg_plan_master
+WITH DATA AND STATS;
+
+CREATE TABLE stg_backup.stg_loyalty
+AS stg_Slipstream_Telecom.stg_loyalty
+WITH DATA AND STATS;
+
+CREATE TABLE stg_backup.stg_voice_plan_run
+AS stg_Slipstream_Telecom.stg_voice_plan_run
+WITH DATA AND STATS;
+
+
+CREATE TABLE stg_backup.stg_data_plan_run
+AS stg_Slipstream_Telecom.stg_data_plan_run
+WITH DATA AND STATS;
+
+.LOGOFF;
+
+2:55 PM 2/16/2021
+
+3:22 PM 2/16/2021
+
+21:34 16-02-2021
+
+21:43 16-02-2021
+
+23:02 16-02-2021
+
+20:06 17-02-2021

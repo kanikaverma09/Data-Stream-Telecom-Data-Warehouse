@@ -1,0 +1,38 @@
+.LOGON dbc/sysdba,learning;
+
+
+CREATE VOLATILE TABLE fetch_start_time(start_time time)ON COMMIT PRESERVE ROWS;
+insert into fetch_start_time values(CURRENT_TIME);
+
+INSERT INTO cr_slipstream_telecom.cr_cust_profile(subscriber_id,user_id,gender,status,date_of_birth,address,state_cd,PIN,Deactivated,Defaulter,run_date)
+	SELECT subscriber_id,
+	       user_id,gender,
+	       status,
+		date_of_birth,
+		address,
+		state_cd,
+		PIN,
+		Deactivated,
+		Defaulter,
+		CURRENT_DATE
+	FROM stg_slipstream_telecom.stg_cust_profile;
+
+INSERT INTO audit_table values('load_cr_cust_profile.btq',
+				'cr_slipstream_telecom',
+				'cr_cust_profile',
+				'INSERT INTO cr_slipstream_telecom.cr_cust_profile',
+				(SELECT start_time from fetch_start_time),
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM cr_slipstream_telecom.cr_cust_profile),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM cr_slipstream_telecom.cr_cust_profile)=0 THEN 'FAIL'
+				     ELSE 'SUCCESS'
+				END);
+
+.LOGOFF;
+20:03 17-02-2021
+
+19:12 18-02-2021
+
+22:06 18-02-2021

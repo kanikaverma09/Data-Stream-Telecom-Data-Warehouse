@@ -1,0 +1,24 @@
+.LOGON dbc/sysdba,learning;
+
+
+INSERT INTO cr_backup.cr_transaction
+SELECT * FROM cr_Slipstream_Telecom.cr_transaction;
+
+.LOGOFF;
+
+
+
+
+3:24 PM 2/16/2021
+
+3:25 PM 2/16/2021
+
+4:02 PM 2/16/2021
+
+21:41 16-02-2021
+
+23:03 16-02-2021
+
+12:36 17-02-2021
+
+20:01 17-02-2021
