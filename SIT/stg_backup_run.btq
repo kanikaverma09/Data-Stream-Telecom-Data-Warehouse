@@ -1,0 +1,10 @@
+.LOGON dbc/sysdba,learning;
+
+INSERT INTO stgtest_backup.stg_voice_plan_run 
+SELECT * FROM stgtest_Slipstream_Telecom.stg_voice_plan_run;
+
+INSERT INTO stgtest_backup.stg_data_plan_run
+SELECT * FROM stgtest_Slipstream_Telecom.stg_data_plan_run;
+
+.LOGOFF;
+

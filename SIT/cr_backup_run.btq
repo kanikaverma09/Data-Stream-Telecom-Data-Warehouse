@@ -1,0 +1,7 @@
+.LOGON dbc/sysdba,learning;
+
+
+INSERT INTO crtest_backup.cr_transaction
+SELECT * FROM crtest_Slipstream_Telecom.cr_transaction;
+
+.LOGOFF;

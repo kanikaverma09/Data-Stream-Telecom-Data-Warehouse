@@ -1,0 +1,35 @@
+.LOGON dbc/sysdba,learning;
+CREATE DATABASE "lndtest_backup" FROM "Sysdba" AS
+	PERMANENT = 104857600,
+	SPOOL = 104857600,
+	TEMPORARY = 1000000000,
+	ACCOUNT = '$M00EDUC&D&H',
+	FALLBACK PROTECTION,
+	NO BEFORE JOURNAL,
+	NO AFTER JOURNAL;
+CREATE TABLE lndtest_backup.lnd_cust_stats
+AS lndtest_Slipstream_Telecom.lnd_cust_stats
+WITH DATA AND STATS;
+
+CREATE TABLE lndtest_backup.lnd_cust_profile
+AS lndtest_Slipstream_Telecom.lnd_cust_profile
+WITH DATA AND STATS;
+
+CREATE TABLE lndtest_backup.lnd_plan_master
+AS lndtest_Slipstream_Telecom.lnd_plan_master
+WITH DATA AND STATS;
+
+CREATE TABLE lndtest_backup.lnd_loyalty
+AS lndtest_Slipstream_Telecom.lnd_loyalty
+WITH DATA AND STATS;
+
+CREATE TABLE lndtest_backup.lnd_voice_plan_run
+AS lndtest_Slipstream_Telecom.lnd_voice_plan_run
+WITH NO DATA AND STATS;
+
+
+CREATE TABLE lndtest_backup.lnd_data_plan_run
+AS lndtest_Slipstream_Telecom.lnd_data_plan_run
+WITH NO DATA AND STATS;
+
+.LOGOFF;

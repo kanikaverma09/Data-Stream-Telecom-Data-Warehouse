@@ -1,0 +1,30 @@
+.LOGON dbc/sysdba,learning;
+CREATE DATABASE "crtest_backup" FROM "Sysdba" AS
+	PERMANENT = 104857600,
+	SPOOL = 104857600,
+	TEMPORARY = 1000000000,
+	ACCOUNT = '$M00EDUC&D&H',
+	FALLBACK PROTECTION,
+	NO BEFORE JOURNAL,
+	NO AFTER JOURNAL;
+CREATE TABLE crtest_backup.cr_cust_stats
+AS cr_Slipstream_Telecom.cr_cust_stats
+WITH DATA AND STATS;
+
+CREATE TABLE crtest_backup.cr_cust_profile
+AS cr_Slipstream_Telecom.cr_cust_profile
+WITH DATA AND STATS;
+
+CREATE TABLE crtest_backup.cr_plan_master
+AS cr_Slipstream_Telecom.cr_plan_master
+WITH DATA AND STATS;
+
+CREATE TABLE crtest_backup.cr_loyalty
+AS cr_Slipstream_Telecom.cr_loyalty
+WITH DATA AND STATS;
+
+CREATE TABLE crtest_backup.cr_transaction
+AS cr_Slipstream_Telecom.cr_transaction
+WITH DATA AND STATS;
+
+.LOGOFF;

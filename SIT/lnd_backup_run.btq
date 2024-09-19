@@ -1,0 +1,9 @@
+.LOGON dbc/sysdba,learning;
+
+INSERT INTO lndtest_backup.lnd_voice_plan_run 
+SELECT * FROM lndtest_Slipstream_Telecom.lnd_voice_plan_run;
+
+INSERT INTO lndtest_backup.lnd_data_plan_run
+SELECT * FROM lndtest_Slipstream_Telecom.lnd_data_plan_run;
+
+.LOGOFF;

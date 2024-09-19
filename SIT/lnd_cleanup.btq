@@ -1,0 +1,35 @@
+.LOGON dbc/Sysdba,learning;
+
+drop table lndtest_slipstream_telecom.lnd_cust_stats;
+drop table lndtest_slipstream_telecom.lnd_cust_stats_ET;
+drop table lndtest_slipstream_telecom.lnd_cust_stats_UV;
+drop table lndtest_slipstream_telecom.lnd_cust_stats_RL;
+
+drop table lndtest_slipstream_telecom.lnd_cust_profile
+drop table lndtest_slipstream_telecom.lnd_cust_profile_ET;
+drop table lndtest_slipstream_telecom.lnd_cust_profile_UV;
+drop table lndtest_slipstream_telecom.lnd_cust_profile_RL;
+
+drop table lndtest_slipstream_telecom.lnd_plan_master;
+drop table lndtest_slipstream_telecom.lnd_plan_master_ET;
+drop table lndtest_slipstream_telecom.lnd_plan_master_UV;
+drop table lndtest_slipstream_telecom.lnd_plan_master_RL;
+
+drop table lndtest_slipstream_telecom.lnd_loyalty;
+drop table lndtest_slipstream_telecom.lnd_loyalty_ET;
+drop table lndtest_slipstream_telecom.lnd_loyalty_UV;
+drop table lndtest_slipstream_telecom.lnd_loyalty_RL;
+
+drop table lndtest_slipstream_telecom.lnd_data_plan_run;
+drop table lndtest_slipstream_telecom.lnd_data_plan_run_ET;
+drop table lndtest_slipstream_telecom.lnd_data_plan_run_UV;
+drop table lndtest_slipstream_telecom.lnd_data_plan_run_RL;
+
+drop table lndtest_slipstream_telecom.lnd_voice_plan_run;
+drop table lndtest_slipstream_telecom.lnd_voice_plan_run_ET;
+drop table lndtest_slipstream_telecom.lnd_voice_plan_run_UV;
+drop table lndtest_slipstream_telecom.lnd_voice_plan_run_RL;
+
+
+.LOGOFF;
+00:19 19-02-2021

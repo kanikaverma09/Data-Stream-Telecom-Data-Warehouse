@@ -1,0 +1,79 @@
+DEFINE JOB update_lnd_data_plan_run
+DESCRIPTION 'Load landing table'
+(
+DEFINE SCHEMA lnd_data_plan_run_Schema
+(
+subscriber_id VARCHAR(10),
+plan_type VARCHAR(15),
+data_consumed VARCHAR(10),
+load_date VARCHAR(15)
+);
+/*FROM TABLE 'lndtest_slipstream_telecom.lnd_data_plan_run';*/
+DEFINE OPERATOR File_Reader
+TYPE DATACONNECTOR PRODUCER
+SCHEMA lnd_data_plan_run_Schema
+ATTRIBUTES
+( 
+VARCHAR FileName = @FileName,
+VARCHAR Format = 'DELIMITED',
+VARCHAR OpenMode = 'Read',
+VARCHAR IndicatorMode = 'N',
+VARCHAR TextDelimiter = ',',
+VARCHAR AcceptExcessColumns = 'Y',
+VARCHAR DeleteTask   = 'N',
+VARCHAR AcceptMissingColumns = 'Y',
+VARCHAR SkipRowsEveryFile = 'Y',
+INTEGER SkipRows = 1
+);
+
+DEFINE OPERATOR update_lnd_data_plan_run
+TYPE UPDATE
+SCHEMA lnd_data_plan_run_Schema
+ATTRIBUTES
+( VARCHAR UserName = 'sysdba',
+VARCHAR UserPassword = 'learning',
+VARCHAR Tdpid = '192.168.77.128',
+VARCHAR LogTable = 'stg_Loyalty_RL',
+VARCHAR TargetTable = 'lndtest_slipstream_telecom.lnd_data_plan_run',
+INTEGER MaxSessions = 8,
+INTEGER TenacitySleep = 1,
+VARCHAR WildCardInsert = 'Y' /*Not default*/
+);
+
+DEFINE OPERATOR DDL_OPERATOR
+TYPE DDL
+
+   ATTRIBUTES
+   (
+      VARCHAR PrivateLogName = 'audit_log',
+      VARCHAR TdpId          = '192.168.77.128',
+      VARCHAR UserName       = 'sysdba',
+      VARCHAR UserPassword   = 'learning'
+   );
+
+STEP first_step(
+
+APPLY 
+	('INSERT INTO lndtest_slipstream_telecom.lnd_data_plan_run
+	(subscriber_id,plan_type,data_consumed,load_date) VALUES(:subscriber_id,:plan_type,:data_consumed,:load_date);'
+       )
+	TO OPERATOR (update_lnd_data_plan_run[1])
+	SELECT * FROM OPERATOR (File_Reader[1]);
+);
+STEP second_step(
+	APPLY('INSERT INTO audit_table values(''lnd_data_plan_run.btq'',
+				''lndtest_slipstream_telecom'',
+				''lnd_data_plan_run'',
+				''INSERT INTO lndtest_slipstream_telecom.lnd_data_plan_run'',
+				CURRENT_TIME,
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM lndtest_slipstream_telecom.lnd_data_plan_run),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM lndtest_slipstream_telecom.lnd_data_plan_run)=0 THEN ''FAIL''
+				     ELSE ''SUCCESS''
+				END);')
+	 TO OPERATOR(DDL_OPERATOR[1]);
+		);
+
+);

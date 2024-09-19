@@ -1,0 +1,38 @@
+.LOGON dbc/sysdba,learning;
+CREATE DATABASE "stgtest_backup" FROM "Sysdba" AS
+	PERMANENT = 104857600,
+	SPOOL = 104857600,
+	TEMPORARY = 1000000000,
+	ACCOUNT = '$M00EDUC&D&H',
+	FALLBACK PROTECTION,
+	NO BEFORE JOURNAL,
+	NO AFTER JOURNAL;
+
+CREATE TABLE stgtest_backup.stg_cust_stats
+AS stgtest_Slipstream_Telecom.stg_cust_stats
+WITH DATA AND STATS;
+
+CREATE TABLE stgtest_backup.stg_cust_profile
+AS stgtest_Slipstream_Telecom.stg_cust_profile
+WITH DATA AND STATS;
+
+CREATE TABLE stgtest_backup.stg_plan_master
+AS stgtest_Slipstream_Telecom.stg_plan_master
+WITH DATA AND STATS;
+
+CREATE TABLE stgtest_backup.stg_loyalty
+AS stgtest_Slipstream_Telecom.stg_loyalty
+WITH DATA AND STATS;
+
+CREATE TABLE stgtest_backup.stg_voice_plan_run
+AS stgtest_Slipstream_Telecom.stg_voice_plan_run
+WITH DATA AND STATS;
+
+
+CREATE TABLE stgtest_backup.stg_data_plan_run
+AS stgtest_Slipstream_Telecom.stg_data_plan_run
+WITH DATA AND STATS;
+
+.LOGOFF;
+
+

@@ -1,0 +1,8 @@
+.LOGON dbc/sysdba,learning;
+
+EXEC delete_data_plan_run_test;
+
+.LOGOFF;
+20:02 17-02-2021
+
+00:16 19-02-2021

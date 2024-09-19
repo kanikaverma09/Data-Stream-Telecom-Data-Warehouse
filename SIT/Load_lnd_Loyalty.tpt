@@ -1,0 +1,67 @@
+DEFINE JOB Load_lnd_Loyalty
+DESCRIPTION 'Load staging loyalty table'
+(
+DEFINE SCHEMA lnd_Loyalty_Schema
+FROM TABLE 'lndtest_slipstream_telecom.lnd_loyalty';
+DEFINE OPERATOR File_Reader
+TYPE DATACONNECTOR PRODUCER
+SCHEMA lnd_Loyalty_Schema
+ATTRIBUTES
+( VARCHAR FileName = 'Loyalty_file.csv',
+VARCHAR Format = 'DELIMITED',
+VARCHAR TextDelimiter = ',',
+VARCHAR OpenMode = 'Read',
+VARCHAR IndicatorMode = 'N',
+VARCHAR AcceptExcessColumns = 'Y',
+VARCHAR AcceptMissingColumns = 'Y',
+INTEGER SkipRows = 1
+);
+
+ 
+
+DEFINE OPERATOR Load_lnd_Loyalty
+TYPE LOAD
+SCHEMA lnd_Loyalty_Schema
+ATTRIBUTES
+( VARCHAR UserName = 'sysdba',
+VARCHAR UserPassword = 'learning',
+VARCHAR Tdpid = '192.168.77.128',
+VARCHAR LogTable = 'stg_Loyalty_RL',
+VARCHAR TargetTable = 'lndtest_slipstream_telecom.lnd_loyalty',
+INTEGER MaxSessions = 8,
+INTEGER TenacitySleep = 1,
+VARCHAR WildCardInsert = 'Y' /*Not default*/
+);
+
+DEFINE OPERATOR DDL_OPERATOR
+TYPE DDL
+
+   ATTRIBUTES
+   (
+      VARCHAR PrivateLogName = 'audit_log',
+      VARCHAR TdpId          = '192.168.77.128',
+      VARCHAR UserName       = 'sysdba',
+      VARCHAR UserPassword   = 'learning'
+   );
+
+STEP first_step(
+	APPLY ('INSERT INTO lndtest_slipstream_telecom.lnd_Loyalty;')
+	TO OPERATOR (Load_lnd_Loyalty[1])
+	SELECT * FROM OPERATOR (File_Reader[1]);
+	);
+STEP second_step(
+	APPLY('INSERT INTO audit_table_test values(''load_lnd_cust_.lnd_Loyaltybtq'',
+				''lndtest_slipstream_telecom'',
+				''lnd_Loyalty'',
+				''INSERT INTO lndtest_slipstream_telecom.lnd_Loyalty'',
+				CURRENT_TIME,
+			  	CURRENT_TIME,
+				CURRENT_DATE,
+				(SELECT COUNT(*) FROM lndtest_slipstream_telecom.lnd_Loyalty),
+				CASE 
+				     WHEN (SELECT COUNT(*) FROM lndtest_slipstream_telecom.lnd_Loyalty)=0 THEN ''FAIL''
+				     ELSE ''SUCCESS''
+				END);')
+	 TO OPERATOR(DDL_OPERATOR[1]);
+		);
+);

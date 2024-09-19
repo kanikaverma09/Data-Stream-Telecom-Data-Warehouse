@@ -1,0 +1,61 @@
+.LOGON dbc/sysdba,learning;
+
+select 'row count of lndtest_cust_stats table :' || count(*) as row_count 
+from lndtest_Slipstream_Telecom.lnd_cust_stats;
+
+select 'row count of lndtest_cust_profile table :' || count(*) as row_count  
+from lndtest_Slipstream_Telecom.lnd_cust_profile;
+
+select 'row count of lndtest_plan_master table :' || count(*) as row_count  
+from lndtest_Slipstream_Telecom.lnd_plan_master;
+
+select 'row count of lndtest_loyalty table :' || count(*) as row_count  
+from lndtest_Slipstream_Telecom.lnd_loyalty;
+
+select 'row count of lndtest_voice_plan_run table :' || count(*) as row_count  
+from lndtest_Slipstream_Telecom.lnd_voice_plan_run;
+
+select 'row count of lndtest_data_plan_run table :' || count(*) as row_count  
+from lndtest_Slipstream_Telecom.lnd_data_plan_run;
+
+
+
+select 'row count of stgtest_cust_stats table :' || count(*) as row_count 
+from stgtest_Slipstream_Telecom.stg_cust_stats;
+
+select 'row count of stgtest_cust_profile table :' || count(*) as row_count  
+from stgtest_Slipstream_Telecom.stg_cust_profile;
+
+select 'row count of stgtest_plan_master table :' || count(*) as row_count  
+from stgtest_Slipstream_Telecom.stg_plan_master;
+
+select 'row count of stgtest_loyalty table :' || count(*) as row_count  
+from stgtest_Slipstream_Telecom.stg_loyalty;
+
+select 'row count of stgtest_voice_plan_run table :' || count(*) as row_count  
+from stgtest_Slipstream_Telecom.stg_voice_plan_run;
+
+select 'row count of stgtest_data_plan_run table :' || count(*) as row_count  
+from stgtest_Slipstream_Telecom.stg_data_plan_run;
+
+
+select 'row count of crtest_cust_stats table :' || count(*) as row_count  
+from crtest_Slipstream_Telecom.cr_cust_stats;
+
+select 'row count of crtest_cust_profile table :' || count(*) as row_count  
+from crtest_Slipstream_Telecom.cr_cust_profile;
+
+select 'row count of crtest_plan_master table :' || count(*) as row_count  
+from crtest_Slipstream_Telecom.cr_plan_master;
+
+select 'row count of crtest_loyalty table :' || count(*) as row_count  
+from crtest_Slipstream_Telecom.cr_loyalty;
+
+select 'row count of crtest_transaction table :' || count(*) as row_count  
+from crtest_Slipstream_Telecom.cr_transaction;
+
+
+.LOGOFF
+
+
+01:21 19-02-2021
