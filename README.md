@@ -29,6 +29,9 @@ Key components of the data structure:
 - **Master Data**: Core business entities such as customer profiles and product catalogs.
 - **Historical Data**: Large volumes of past records that will be loaded into the warehouse for trend analysis and reporting.
 
+![Slipstream datamodel](https://github.com/user-attachments/assets/5e0c8ed7-74a0-4cd5-b186-68728fceb7b4)
+
+
 ### Tools Used
 
 - **Teradata**: The primary database management system used for the data warehouse.
