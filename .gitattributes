@@ -1,2 +1,3 @@
 *.bat linguist-detectable=false
- .github/SQL-custom-action
+ *.sql linguist-language=SQL
+
