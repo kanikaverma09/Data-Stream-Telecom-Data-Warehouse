@@ -1,3 +1,6 @@
 *.bat linguist-detectable=false
- *.sql linguist-language=SQL
+*.sql linguist-language=SQL
+*.txt linguist-language=SQL
+*.json linguist-language=SQL
+
 
